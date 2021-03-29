@@ -1,6 +1,8 @@
 # Home Custer
 My kubernetes at home setup
 
+https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
+
 ## 🚧 GPG
 
 - Master key + sub keys
