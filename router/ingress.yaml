@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: router
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
 spec:
   rules:
     - host: router.whiskeysierra.ddns.net
@@ -14,8 +16,7 @@ spec:
                 name: router
                 port:
                   name: http
-# TODO
-#  tls:
-#    - hosts:
-#        - router.whiskeysierra.ddns.net
-#      secretName: router-whiskeysierra-ddns-net-tls
+  tls:
+    - hosts:
+        - router.whiskeysierra.ddns.net
+      secretName: router-whiskeysierra-ddns-net-tls

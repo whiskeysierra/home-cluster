@@ -18,8 +18,12 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 
 ### 🚧 Hardware
 
-- Currently `kind` running on macOS
-- Planning to use Raspberry Pi 4 w/ 8G memory
+I'm currently running `kind` on macOS.
+See [kind/config.yaml](kind/config.yaml).
+The most limiting factor is the lack of the docker containers joining my home network.
+See https://www.thehumblelab.com/kind-and-metallb-on-mac/.
+
+I'm planning to use one or more Raspberry Pi 4 w/ 8G memory.
 
 ### 🚧 Networking
 
@@ -32,11 +36,12 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
     - Two address pools
     - Fixed
         - See https://metallb.universe.tf/usage/#requesting-specific-ips
-        - `192.168.188.201` 
-        - `192.168.188.202`
-        - `192.168.188.203`
-        - `192.168.188.204`
+        - Range `192.168.188.201-192.168.188.208`
+        - `192.168.188.201`
+            - Ingress controller
+            - Target of port-forwarding for TCP/80 and TCP/443
     - Dynamic
+        - Range `192.168.188.209-192.168.188.254`
 - ingress-nginx
 
 ### 🚧 DNS
@@ -72,7 +77,6 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 - [Nextcloud](https://nextcloud.com/)
 - [Kodi](https://kodi.tv/)
 - [Home-Assistant](https://www.home-assistant.io/)
-
 
 ### 🚧 Routes
 
