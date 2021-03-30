@@ -21,7 +21,7 @@ for component in $components; do
       await metallb-system daemonset/speaker
       ;;
     ingress-nginx)
-      deploy ingress-nginx ingress-nginx-controller
+      deploy ingress-nginx
       await ingress-nginx deployment/ingress-nginx-controller
       ;;
     router)

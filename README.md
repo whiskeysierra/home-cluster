@@ -6,7 +6,7 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 ## 🚧 GPG
 
 - Master key + sub keys
-- YubiKey as a smartcard
+- YubiKey as a smart card
 - SSH support
 
 ## 🚧 Secrets
@@ -45,21 +45,22 @@ My router operates within `192.168.188.0/24` and DHCP is limited to `192.168.188
 ipcalc 192.168.100.0/24 -s 62 62 62
 ```
 
-- `192.168.100.0/26` reserved for running locally with `kind`
+- `192.168.100.0/26` reserved for fixed external IPs
     - `192.168.100.1-192.168.100.62` (62 hosts)
-    - `192.168.100.1` gateway
-    - `192.168.100.2-192.168.100.62` nodes
-    - See [`kind` network setup](bin/start)
-- `192.168.100.64/26` reserved for fixed external IPs
+    - Managed by [`metallb`](metallb/metallb-config.yaml)
+    - `192.168.100.1` reserved for DNS server
+    - `192.168.100.2` reserved for Ingress controller
+       - Target of port-forwarding on TCP/80 and TCP/443
+- `192.168.100.64/26` reserved for dynamic external IPs
     - `192.168.100.65-192.168.100.126` (62 hosts)
-    - [Managed by `metallb`](metallb/metallb-config.yaml)
-    - `192.168.100.65` reserved for DNS server
-    - `192.168.100.34` reserved for Ingress controller
-        - Target of port-forwarding on TCP/80 and TCP/443
-- `192.168.100.128/26` reserved for dynamic external IPs
+    - Managed by [`metallb`](metallb/metallb-config.yaml)
+- `192.168.100.128/26` reserved for future use
     - `192.168.100.129-192.168.100.190` (62 hosts)
-    - [Managed by `metallb`](metallb/metallb-config.yaml)    
-- `192.168.100.192/26` reserved for future use
+- `192.168.100.192/26` reserved for running locally with `kind`
+    - `192.168.100.193-192.168.100.254` (62 hosts)
+    - `192.168.100.193` gateway
+    - `192.168.100.194-192.168.100.254` nodes
+    - See [`kind` network setup](bin/start)
 
 ### 🚧 DNS
 

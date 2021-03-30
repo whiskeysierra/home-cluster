@@ -2,17 +2,21 @@
 
 set -euo pipefail
 
+bridge() {
+  "$(git rev-parse --show-toplevel)/bin/docker-tuntap-osx/sbin/docker_tap_up.sh"
+
+  # route the whole 192.168.100.0/24, so we can reach nodes as well as load-balancer services
+  sudo route -v add -net 192.168.100.0 -netmask 255.255.255.0 10.0.75.2
+}
+
 echo 'Creating network "kind" ...'
 docker network create kind \
     --driver bridge \
-    --gateway 192.168.100.1 \
-    --subnet 192.168.100.0/26 \
+    --gateway 192.168.100.193 \
+    --subnet 192.168.100.192/26 \
     --scope local \
     --opt com.docker.network.bridge.enable_ip_masquerade=true > /dev/null
 
 kind create cluster \
     --name local \
     --config "$(git rev-parse --show-toplevel)/kind/config.yaml"
-
-# route the whole /24, so we can reach nodes as well as loadbalancer services
-sudo route -v add -net 192.168.100.1 -netmask 255.255.255.0 10.0.75.2
