@@ -33,16 +33,33 @@ I'm planning to use one or more Raspberry Pi 4 w/ 8G memory.
 - Network plugin
     - https://kubernetes.io/docs/concepts/cluster-administration/networking/
 - [metallb](https://metallb.universe.tf/)
-    - Two address pools
-    - Fixed
-        - See https://metallb.universe.tf/usage/#requesting-specific-ips
-        - Range `192.168.188.201-192.168.188.208`
-        - `192.168.188.201`
-            - Ingress controller
-            - Target of port-forwarding for TCP/80 and TCP/443
-    - Dynamic
-        - Range `192.168.188.209-192.168.188.254`
 - ingress-nginx
+
+#### IP Address Management
+
+Everything operates within a `192.168.100.0/24` (254 hosts) subnet.
+It's important that this subnet's range is not used by the network's DHCP server.
+My router operates within `192.168.188.0/24` and DHCP is limited to `192.168.188.20-192.168.188.200`.
+
+```shell
+ipcalc 192.168.100.0/24 -s 62 62 62
+```
+
+- `192.168.100.0/26` reserved for running locally with `kind`
+    - `192.168.100.1-192.168.100.62` (62 hosts)
+    - `192.168.100.1` gateway
+    - `192.168.100.2-192.168.100.62` nodes
+    - See [`kind` network setup](bin/start)
+- `192.168.100.64/26` reserved for fixed external IPs
+    - `192.168.100.65-192.168.100.126` (62 hosts)
+    - [Managed by `metallb`](metallb/metallb-config.yaml)
+    - `192.168.100.65` reserved for DNS server
+    - `192.168.100.34` reserved for Ingress controller
+        - Target of port-forwarding on TCP/80 and TCP/443
+- `192.168.100.128/26` reserved for dynamic external IPs
+    - `192.168.100.129-192.168.100.190` (62 hosts)
+    - [Managed by `metallb`](metallb/metallb-config.yaml)    
+- `192.168.100.192/26` reserved for future use
 
 ### 🚧 DNS
 

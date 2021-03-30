@@ -8,7 +8,7 @@ deploy() {
 }
 
 await() {
-  kubectl rollout status "Deployment/$2" --timeout 0s --insecure-skip-tls-verify --namespace "$1"
+  kubectl rollout status "$2" --timeout 0s --insecure-skip-tls-verify --namespace "$1"
 }
 
 components="${*:-metallb ingress-nginx router}"
@@ -17,11 +17,12 @@ for component in $components; do
   case $component in
     metallb)
       deploy metallb
-      await metallb-system controller
+      await metallb-system deployment/controller
+      await metallb-system daemonset/speaker
       ;;
     ingress-nginx)
       deploy ingress-nginx ingress-nginx-controller
-      await ingress-nginx ingress-nginx-controller
+      await ingress-nginx deployment/ingress-nginx-controller
       ;;
     router)
       deploy router

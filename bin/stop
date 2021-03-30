@@ -4,3 +4,6 @@ set -euo pipefail
 
 kind delete cluster \
     --name local
+
+echo -n 'Deleting network "kind" ...'
+docker network rm kind > /dev/null
