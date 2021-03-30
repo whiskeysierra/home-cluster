@@ -12,6 +12,7 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 ## 🚧 Secrets
 
 - SOPS
+    - https://github.com/goabout/kustomize-sopssecretgenerator
 
 ## Infrastructure
 
@@ -28,6 +29,14 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 - Network plugin
     - https://kubernetes.io/docs/concepts/cluster-administration/networking/
 - [metallb](https://metallb.universe.tf/)
+    - Two address pools
+    - Fixed
+        - See https://metallb.universe.tf/usage/#requesting-specific-ips
+        - `192.168.188.201` 
+        - `192.168.188.202`
+        - `192.168.188.203`
+        - `192.168.188.204`
+    - Dynamic
 - ingress-nginx
 
 ### 🚧 DNS

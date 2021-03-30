@@ -1,0 +1,10 @@
+address-pools:
+  - name: fixed
+    protocol: layer2
+    addresses:
+      - 192.168.188.201-192.168.188.208
+    auto-assign: false
+  - name: dynamic
+    protocol: layer2
+    addresses:
+      - 192.168.188.209-192.168.188.254
