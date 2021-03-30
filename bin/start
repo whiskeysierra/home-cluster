@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -euo pipefail
+
+kind create cluster \
+    --name local \
+    --config "$(git rev-parse --show-toplevel)/kind/config.yaml"

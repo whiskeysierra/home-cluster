@@ -1,0 +1,22 @@
+# https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-mapping-external-services
+apiVersion: v1
+kind: Service
+metadata:
+  name: router
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: router
+subsets:
+  - addresses:
+      - ip: 192.168.188.1
+    ports:
+      - name: http
+        port: 80

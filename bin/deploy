@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -euo pipefail
+
+deploy() {
+  echo "Deploying '$1'..."
+  kustomize build --enable-alpha-plugins "$(git rev-parse --show-toplevel)/$1" | kubectl apply -f -
+}
+
+await() {
+  kubectl rollout status "Deployment/$2" --timeout 0s --insecure-skip-tls-verify --namespace "$1"
+}
+
+components="${*:-metallb ingress-nginx router}"
+
+for component in $components; do
+  case $component in
+    metallb)
+      deploy metallb
+      await metallb-system controller
+      ;;
+    ingress-nginx)
+      deploy ingress-nginx ingress-nginx-controller
+      await ingress-nginx ingress-nginx-controller
+      ;;
+    router)
+      deploy router
+      ;;
+    *)
+      echo "Unknown component '$component'"
+      ;;
+  esac
+done
+
+
+
