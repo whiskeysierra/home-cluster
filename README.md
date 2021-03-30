@@ -13,14 +13,24 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 
 - SOPS
 
-## 🚧 Networking
+## Infrastructure
+
+### 🚧 Hardware
+
+- Currently `kind` running on macOS
+- Planning to use Raspberry Pi 4 w/ 8G memory
+
+### 🚧 Networking
 
 - Fritz!Box 7490
     - Dynamic DNS support
     - Port forwarding to first IP in range
+- Network plugin
+    - https://kubernetes.io/docs/concepts/cluster-administration/networking/
 - [metallb](https://metallb.universe.tf/)
+- ingress-nginx
 
-## 🚧 DNS
+### 🚧 DNS
 
 - [Pi-hole](https://pi-hole.net/)
 - Dynamic DNS, No-IP
@@ -28,19 +38,32 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
     - `xyz.local`
     - `xyz.whiskeysierra.ddns.net`
     
-## 🚧 Storage
+### 🚧 Storage
 
 - ConfigMap vs. local disk
 - NAS?
 
-## 🚧 Ingress
+## 🚧 System
 
-- ingress-nginx
+- Which kubernetes distro?
+
+## 🚧 Services
+
 - cert-manager
 - oauth2-proxy
     - Github OAuth application
     - Restricted access
     - Single-Sign-On
+- [Grafana](https://grafana.com/)
+- [Prometheus](https://prometheus.io/)
+- [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+  
+## 🚧 Applications
+
+- [Nextcloud](https://nextcloud.com/)
+- [Kodi](https://kodi.tv/)
+- [Home-Assistant](https://www.home-assistant.io/)
+
 
 ### 🚧 Routes
 
@@ -51,15 +74,3 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 | `pi-hole`    | Pi-hole              | ✅       | ✅      |
 | `prometheus` | Prometheus           | ✅       | ❌      |
 | `router`     | Fritz!Box UI         | ✅       | ✅      |
-
-## 🚧 Services
-
-- [Grafana](https://grafana.com/)
-- [Prometheus](https://prometheus.io/)
-- [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
-  
-## 🚧 Applications
-
-- [Nextcloud](https://nextcloud.com/)
-- [Kodi](https://kodi.tv/)
-- [Home-Assistant](https://www.home-assistant.io/)
