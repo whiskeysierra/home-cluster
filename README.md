@@ -3,6 +3,17 @@ My kubernetes at home setup
 
 https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 
+## Prerequisites
+
+- [Homebrew](https://brew.sh/)
+- [Docker for Mac](https://docs.docker.com/docker-for-mac/)
+- [Kind](https://kind.sigs.k8s.io/)
+- [kubectx](https://github.com/ahmetb/kubectx)
+
+```shell
+brew install homebrew/cask/docker kind kubectx
+```
+
 ## 🚧 GPG
 
 - Master key (offline)
