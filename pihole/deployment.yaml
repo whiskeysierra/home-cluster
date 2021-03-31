@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  labels:
+    app: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+        - name: pihole
+          image: pihole/pihole:v5.7@sha256:fdfa9df1baed57980e6fb807d2bde8bf2ef0667c7a85060276b4adb22de31ba2
+          envFrom:
+            - configMapRef:
+                name: pihole-env
+          ports:
+            - name: http
+              containerPort: 80
+            - name : dns
+              protocol : UDP
+              containerPort: 53
+          volumeMounts:
+            - name: pihole-etc
+              mountPath: /etc/pihole
+            - name: custom-dnsmasq
+              mountPath: /etc/dnsmasq.d/02-custom.conf
+              subPath: 02-custom.conf
+          livenessProbe:
+            httpGet:
+              path: /admin.index.php
+              port: http
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /admin.index.php
+              port: http
+            initialDelaySeconds: 60
+            failureThreshold: 3
+            timeoutSeconds: 5
+      volumes:
+        - name: pihole-etc
+          configMap:
+            name: pihole-etc
+        - name: custom-dnsmasq
+          configMap:
+            name: custom-dnsmasq
+            defaultMode: 420
+

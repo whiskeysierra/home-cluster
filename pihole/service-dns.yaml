@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pihole-dns
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.100.1
+  externalTrafficPolicy: Local
+  selector:
+    app: pihole
+  ports:
+    - name : dns
+      protocol: UDP
+      port: 53
+      targetPort: 53

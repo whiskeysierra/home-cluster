@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pihole
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
+spec:
+  rules:
+    - host: pihole.whiskeysierra.myhome-server.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pihole-http
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - pihole.whiskeysierra.myhome-server.de
+      secretName: pihole-whiskeysierra-myhome-server-tls
