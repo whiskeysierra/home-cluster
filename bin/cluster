@@ -1,0 +1,71 @@
+#!/bin/bash
+
+set -euo pipefail
+
+: "${1?"Usage: $0 <create|delete>"}"
+
+create_network() {
+  echo 'Creating network "kind" ...'
+  docker network create kind \
+      --driver bridge \
+      --subnet 192.168.100.0/24 \
+      --ip-range 192.168.100.192/26 \
+      --gateway 192.168.100.192 \
+      --scope local \
+      --opt com.docker.network.bridge.enable_ip_masquerade=true > /dev/null
+}
+
+delete_network() {
+  echo -n 'Deleting network "kind" ...'
+  docker network rm kind > /dev/null
+  echo
+}
+
+create_cluster() {
+  kind create cluster \
+      --name local \
+      --config "$(git rev-parse --show-toplevel)/kind/config.yaml"
+}
+
+delete_cluster() {
+  kind delete cluster \
+      --name local
+}
+
+create_bridge() {
+  # Local and host gateway addresses
+  localGateway='10.0.75.1'
+  hostGateway='10.0.75.2'
+  hostNetmask='255.255.255.252'
+
+  echo -n 'Creating bridge route ...'
+  # Startup local and host tun/tap interfaces
+  sudo ifconfig tap1 $localGateway netmask $hostNetmask up
+
+  docker run --rm --privileged --network=kind --pid=host alpine \
+      ifconfig eth0 $hostGateway netmask $hostNetmask up
+
+  # route the whole 192.168.100.0/24, so we can reach nodes as well as load-balancer services
+  sudo route add -net 192.168.100.0 -netmask 255.255.255.0 $hostGateway > /dev/null
+  echo
+}
+
+delete_bridge() {
+  echo -n 'Deleting bridge route ...'
+  sudo ifconfig tap1 down
+  # TODO needed? sudo route delete -net 192.168.100.0
+  echo
+}
+
+case $1 in
+  create)
+    create_network
+    create_cluster
+    create_bridge
+    ;;
+  delete)
+    delete_bridge
+    delete_cluster
+    delete_network
+    ;;
+esac
