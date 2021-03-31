@@ -53,7 +53,6 @@ create_bridge() {
 delete_bridge() {
   echo -n 'Deleting bridge route ...'
   sudo ifconfig tap1 down
-  # TODO needed? sudo route delete -net 192.168.100.0
   echo
 }
 

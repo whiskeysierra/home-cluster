@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
 spec:
   rules:
-    - host: router.whiskeysierra.ddns.net
+    - host: router.whiskeysierra.myhome-server.de
       http:
         paths:
           - path: /
@@ -18,5 +18,5 @@ spec:
                   name: http
   tls:
     - hosts:
-        - router.whiskeysierra.ddns.net
-      secretName: router-whiskeysierra-ddns-net-tls
+        - router.whiskeysierra.myhome-server.de
+      secretName: router-whiskeysierra-myhome-server-tls

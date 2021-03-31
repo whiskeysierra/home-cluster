@@ -58,6 +58,7 @@ ipcalc 192.168.100.0/24 -s 62 62 62
     - `192.168.100.128-192.168.100.191` (64 hosts)
 - `192.168.100.192/26` reserved for running locally with `kind`
     - `192.168.100.192-192.168.100.255` (63 hosts)
+    - Managed by [`docker`](bin/cluster)
     - `192.168.100.192` gateway
     - `192.168.100.193-192.168.100.255` nodes
     - See [`kind` network setup](bin/cluster)
@@ -65,10 +66,10 @@ ipcalc 192.168.100.0/24 -s 62 62 62
 ### 🚧 DNS
 
 - [Pi-hole](https://pi-hole.net/)
-- Dynamic DNS, No-IP
+- [DynDNS Service](https://ddnss.de/)
 - local vs. public
     - `xyz.local`
-    - `xyz.whiskeysierra.ddns.net`
+    - `xyz.whiskeysierra.myhome-server.de`
     
 ### 🚧 Storage
 
