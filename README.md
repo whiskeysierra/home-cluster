@@ -5,7 +5,11 @@ https://blog.quickbird.uk/domesticating-kubernetes-d49c178ebc41
 
 ## 🚧 GPG
 
-- Master key + sub keys
+- Master key (offline)
+- Sub keys
+    - **S**ignature
+    - **E**ncryption
+    - **A**uthentication
 - YubiKey as a smart card
 - SSH support
 
