@@ -11,7 +11,7 @@ await() {
   kubectl rollout status "$2" --timeout 0s --insecure-skip-tls-verify --namespace "$1"
 }
 
-components="${*:-metallb ingress-nginx router dashboard}"
+components="${*:-metallb ingress-nginx router dashboard web-view}"
 
 for component in $components; do
   case $component in
@@ -31,6 +31,10 @@ for component in $components; do
       deploy dashboard
       await kubernetes-dashboard deployment/kubernetes-dashboard
       await kubernetes-dashboard deployment/dashboard-metrics-scraper
+      ;;
+    web-view)
+      deploy web-view
+      await web-view deployment/kube-web-view
       ;;
     *)
       echo "Unknown component '$component'"

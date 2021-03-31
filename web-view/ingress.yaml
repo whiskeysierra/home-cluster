@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-view
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
+spec:
+  rules:
+    - host: web-view.whiskeysierra.myhome-server.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-web-view
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - web-view.whiskeysierra.myhome-server.de
+      secretName: web-view-whiskeysierra-myhome-server-tls
