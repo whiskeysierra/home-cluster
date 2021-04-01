@@ -4,19 +4,10 @@ metadata:
   name: router
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
+    nginx.ingress.kubernetes.io/server-alias: router.home
 spec:
   rules:
     - host: router.whiskeysierra.myhome-server.de
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: router
-                port:
-                  name: http
-    - host: router.home
       http:
         paths:
           - path: /

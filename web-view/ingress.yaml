@@ -4,19 +4,10 @@ metadata:
   name: web-view
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
+    nginx.ingress.kubernetes.io/server-alias: web-view.home
 spec:
   rules:
     - host: web-view.whiskeysierra.myhome-server.de
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: kube-web-view
-                port:
-                  number: 80
-    - host: web-view.home
       http:
         paths:
           - path: /

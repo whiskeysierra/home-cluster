@@ -4,19 +4,10 @@ metadata:
   name: pihole
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
+    nginx.ingress.kubernetes.io/server-alias: pihole.home
 spec:
   rules:
     - host: pihole.whiskeysierra.myhome-server.de
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: pihole-http
-                port:
-                  name: http
-    - host: pihole.home
       http:
         paths:
           - path: /
