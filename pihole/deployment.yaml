@@ -28,7 +28,11 @@ spec:
               containerPort: 53
           volumeMounts:
             - name: pihole-etc
-              mountPath: /etc/pihole
+              mountPath: /etc/pihole/adlists.list
+              subPath: adlists.list
+            - name: pihole-etc
+              mountPath: /etc/pihole/regex.list
+              subPath: regex.list
             - name: custom-dnsmasq
               mountPath: /etc/dnsmasq.d/02-custom.conf
               subPath: 02-custom.conf

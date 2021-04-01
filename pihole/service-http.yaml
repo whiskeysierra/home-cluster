@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: pihole-web
+  name: pihole-http
 spec:
   type: ClusterIP
   selector:
