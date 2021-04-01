@@ -4,5 +4,5 @@ namespace: router-system
 
 resources:
   - namespace.yaml
-  - service-http.yaml
+  - service.yaml
   - ingress.yaml

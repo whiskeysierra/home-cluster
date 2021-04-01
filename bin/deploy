@@ -11,7 +11,7 @@ await() {
   kubectl rollout status "$2" --timeout 0s --insecure-skip-tls-verify --namespace "$1"
 }
 
-components="${*:-metallb pihole ingress-nginx router dashboard web-view}"
+components="${*:-metallb pihole ingress-nginx router web-view}"
 
 for component in $components; do
   case $component in
@@ -30,11 +30,6 @@ for component in $components; do
       ;;
     router)
       deploy router
-      ;;
-    dashboard)
-      deploy dashboard
-      await kubernetes-dashboard deployment/kubernetes-dashboard
-      await kubernetes-dashboard deployment/dashboard-metrics-scraper
       ;;
     web-view)
       deploy web-view

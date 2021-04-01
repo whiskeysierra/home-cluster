@@ -16,6 +16,16 @@ spec:
                 name: pihole-http
                 port:
                   name: http
+    - host: pihole.home
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pihole-http
+                port:
+                  name: http
   tls:
     - hosts:
         - pihole.whiskeysierra.myhome-server.de

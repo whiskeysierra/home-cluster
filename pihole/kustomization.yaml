@@ -12,11 +12,11 @@ resources:
 configMapGenerator:
   - name: pihole-etc
     files:
-      - adlists.list
+      - custom.list
       - regex.list
-  - name: custom-dnsmasq
-    files:
-      - 02-custom.conf=dnsmasq.conf
   - name: pihole-env
     envs:
       - config.env
+
+generators:
+  - secret.yaml

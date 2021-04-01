@@ -81,9 +81,13 @@ ipcalc 192.168.100.0/24 -s 62 62 62
 ### 🚧 DNS
 
 - [Pi-hole](https://pi-hole.net/)
+    - https://github.com/pi-hole/pi-hole
+    - https://github.com/pi-hole/docker-pi-hole
+    - https://github.com/MoJo2600/pihole-kubernetes
+    - https://docs.pi-hole.net/routers/fritzbox/
 - [DynDNS Service](https://ddnss.de/)
 - local vs. public
-    - `xyz.local`
+    - `xyz.home`
     - `xyz.whiskeysierra.myhome-server.de`
     
 ### 🚧 Storage

@@ -16,6 +16,16 @@ spec:
                 name: router
                 port:
                   name: http
+    - host: router.home
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: router
+                port:
+                  name: http
   tls:
     - hosts:
         - router.whiskeysierra.myhome-server.de

@@ -20,6 +20,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: pihole-env
+            - secretRef:
+                name: pihole-secret-env
           ports:
             - name: http
               containerPort: 80
@@ -28,14 +30,11 @@ spec:
               containerPort: 53
           volumeMounts:
             - name: pihole-etc
-              mountPath: /etc/pihole/adlists.list
-              subPath: adlists.list
+              mountPath: /etc/pihole/custom.list
+              subPath: custom.list
             - name: pihole-etc
               mountPath: /etc/pihole/regex.list
               subPath: regex.list
-            - name: custom-dnsmasq
-              mountPath: /etc/dnsmasq.d/02-custom.conf
-              subPath: 02-custom.conf
           livenessProbe:
             httpGet:
               path: /admin.index.php
@@ -54,8 +53,4 @@ spec:
         - name: pihole-etc
           configMap:
             name: pihole-etc
-        - name: custom-dnsmasq
-          configMap:
-            name: custom-dnsmasq
-            defaultMode: 420
 

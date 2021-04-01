@@ -6,7 +6,7 @@ resources:
   - github.com/metallb/metallb//manifests?ref=v0.9.6
 
 generators:
-  - secret-generator.yaml
+  - secret.yaml
 
 configMapGenerator:
   - name: config
