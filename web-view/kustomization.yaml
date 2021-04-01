@@ -15,3 +15,7 @@ patches:
     target:
       group: rbac.authorization.k8s.io
       version: v1beta1
+
+replicas:
+  - name: kube-web-view
+    count: 2
