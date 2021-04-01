@@ -32,9 +32,6 @@ spec:
             - name: pihole-etc
               mountPath: /etc/pihole/custom.list
               subPath: custom.list
-            - name: pihole-etc
-              mountPath: /etc/pihole/regex.list
-              subPath: regex.list
           livenessProbe:
             httpGet:
               path: /admin.index.php

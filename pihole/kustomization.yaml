@@ -13,7 +13,6 @@ configMapGenerator:
   - name: pihole-etc
     files:
       - custom.list
-      - regex.list
   - name: pihole-env
     envs:
       - config.env
