@@ -5,7 +5,6 @@ metadata:
   labels:
     app: pihole
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: pihole
@@ -25,13 +24,17 @@ spec:
           ports:
             - name: http
               containerPort: 80
-            - name : dns
+            - name : dns-udp
               protocol : UDP
+              containerPort: 53
+            - name: dns-tcp
+              protocol: TCP
               containerPort: 53
           volumeMounts:
             - name: pihole-etc
               mountPath: /etc/pihole/custom.list
               subPath: custom.list
+              readOnly: true
           livenessProbe:
             httpGet:
               path: /admin.index.php
