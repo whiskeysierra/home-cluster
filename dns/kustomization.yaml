@@ -3,6 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - coredns
   - unbound
+  - coredns
   - pihole

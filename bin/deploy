@@ -2,20 +2,34 @@
 
 set -euo pipefail
 
+# TODO -d/--dry-run support
+
+root() {
+  git rev-parse --show-toplevel
+}
+
 wait-for() {
-  namespace="$(basename "$3")"
-  echo "Waiting for '$namespace' $1 to become $2..."
-  kubectl wait --for=condition="$2" --all "$1" --timeout=60s --namespace "$namespace"
+  echo "Waiting for '$3' $1 to become $2..."
+  kubectl wait --for=condition="$2" --all "$1" --timeout=60s --namespace "$3"
 }
 
 deploy() {
-  echo "Deploying '$1'..."
-  kustomize build --enable-alpha-plugins "$(git rev-parse --show-toplevel)/$1" | kubectl apply -f -
-  wait-for deployments available "$1"
-  wait-for pods ready "$1"
+  directory=$1
+  component="$(realpath --relative-to="$(root)" "$directory")"
+  namespace="$(basename "$directory")"
+  echo "Deploying '$component'..."
+  kustomize build --enable-alpha-plugins "$directory" | kubectl apply -f -
+  wait-for deployments available "$namespace"
+  wait-for daemonsets available "$namespace"
+  wait-for pods ready "$namespace"
 }
 
-components="${*:-network/metallb network/ingress-nginx dns/pihole network/router web-view}"
+defaults() {
+  base="$(root)"
+  awk '{print "'"$base"'/" $0}' "$base/components.lst"
+}
+
+components="${*:-$(defaults)}"
 
 for component in $components; do
   deploy "$component"
