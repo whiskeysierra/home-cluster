@@ -64,8 +64,9 @@ ipcalc 192.168.100.0/24 -s 62 62 62
     - `192.168.100.1-192.168.100.63` (63 hosts)
     - Managed by [`metallb`](metallb/metallb-config.yaml)
     - `192.168.100.1` reserved for DNS server
-    - `192.168.100.2` reserved for Ingress controller
+    - `192.168.100.2` reserved for public Ingress controller
        - Target of port-forwarding on TCP/80 and TCP/443
+    - `192.168.100.3` reserved for private Ingress controller
 - `192.168.100.64/26` reserved for dynamic external IPs
     - `192.168.100.64-192.168.100.127` (64 hosts)
     - Managed by [`metallb`](metallb/metallb-config.yaml)

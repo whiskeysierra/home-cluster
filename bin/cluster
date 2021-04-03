@@ -4,7 +4,7 @@ set -euo pipefail
 
 : "${1?"Usage: $0 <create|delete>"}"
 
-create_network() {
+create-network() {
   echo 'Creating network "kind" ...'
   docker network create kind \
       --driver bridge \
@@ -15,24 +15,24 @@ create_network() {
       --opt com.docker.network.bridge.enable_ip_masquerade=true > /dev/null
 }
 
-delete_network() {
+delete-network() {
   echo -n 'Deleting network "kind" ...'
   docker network rm kind > /dev/null
   echo
 }
 
-create_cluster() {
+create-cluster() {
   kind create cluster \
       --name local \
       --config "$(git rev-parse --show-toplevel)/kind/config.yaml"
 }
 
-delete_cluster() {
+delete-cluster() {
   kind delete cluster \
       --name local
 }
 
-create_bridge() {
+create-bridge() {
   # Local and host gateway addresses
   localGateway='10.0.75.1'
   hostGateway='10.0.75.2'
@@ -50,7 +50,7 @@ create_bridge() {
   echo
 }
 
-delete_bridge() {
+delete-bridge() {
   echo -n 'Deleting bridge route ...'
   sudo ifconfig tap1 down
   echo
@@ -58,13 +58,13 @@ delete_bridge() {
 
 case $1 in
   create)
-    create_network
-    create_cluster
-    create_bridge
+    create-network
+    create-cluster
+    create-bridge
     ;;
   delete)
-    delete_bridge
-    delete_cluster
-    delete_network
+    delete-bridge
+    delete-cluster
+    delete-network
     ;;
 esac

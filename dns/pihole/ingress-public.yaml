@@ -1,23 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: router
+  name: pihole-public
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO true
-    nginx.ingress.kubernetes.io/server-alias: router.home
 spec:
+  ingressClassName: public
   rules:
-    - host: router.whiskeysierra.myhome-server.de
+    - host: pihole.whiskeysierra.myhome-server.de
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: router
+                name: pihole-http
                 port:
                   name: http
   tls:
     - hosts:
-        - router.whiskeysierra.myhome-server.de
-      secretName: router-whiskeysierra-myhome-server-tls
+        - pihole.whiskeysierra.myhome-server.de
+      secretName: pihole-whiskeysierra-myhome-server-tls

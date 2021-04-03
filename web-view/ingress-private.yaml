@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-view-private
+spec:
+  ingressClassName: private
+  rules:
+    - host: web-view.home
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-web-view
+                port:
+                  number: 80

@@ -2,15 +2,21 @@
 
 set -euo pipefail
 
-# TODO -d/--dry-run support
-
 root() {
   git rev-parse --show-toplevel
 }
 
+kubectl-apply() {
+  kubectl apply "$@"
+}
+
+kubectl-wait() {
+  kubectl wait "$@"
+}
+
 wait-for() {
   echo "Waiting for '$3' $1 to become $2..."
-  kubectl wait --for=condition="$2" --all "$1" --timeout=60s --namespace "$3"
+  kubectl-wait --for=condition="$2" --all "$1" --timeout=60s --namespace "$3"
 }
 
 deploy() {
@@ -18,7 +24,7 @@ deploy() {
   component="$(realpath --relative-to="$(root)" "$directory")"
   namespace="$(basename "$directory")"
   echo "Deploying '$component'..."
-  kustomize build --enable-alpha-plugins "$directory" | kubectl apply -f -
+  kustomize build --enable-alpha-plugins "$directory" | kubectl-apply -f -
   wait-for deployments available "$namespace"
   wait-for daemonsets available "$namespace"
   wait-for pods ready "$namespace"
@@ -29,7 +35,39 @@ defaults() {
   awk '{print "'"$base"'/" $0}' "$base/components.lst"
 }
 
+PARAMS=""
+dry_run=false
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -d | --dry-run)
+      dry_run=true
+      shift
+      ;;
+    -*) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
+
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
 components="${*:-$(defaults)}"
+
+if $dry_run; then
+  kubectl-apply() {
+    cat > /dev/null
+  }
+  kubectl-wait() {
+    :
+  }
+fi
 
 for component in $components; do
   deploy "$component"

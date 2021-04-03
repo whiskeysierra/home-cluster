@@ -6,7 +6,8 @@ resources:
   - deployment.yaml
   - service-dns.yaml
   - service-http.yaml
-  - ingress.yaml
+  - ingress-private.yaml
+  - ingress-public.yaml
 
 configMapGenerator:
   - name: pihole-etc

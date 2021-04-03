@@ -1,0 +1,5 @@
+controller:
+  ingressClass: public
+  service:
+    loadBalancerIP: 192.168.100.2
+    externalTrafficPolicy: Local
