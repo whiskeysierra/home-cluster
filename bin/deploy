@@ -14,9 +14,16 @@ kubectl-wait() {
   kubectl wait "$@"
 }
 
+workloads() {
+  kubectl get deployments,daemonsets,statefulsets --namespace "$1" -o json | \
+      jq -r '.items[] | (.kind | ascii_downcase) + "/" + .metadata.name'
+}
+
 wait-for() {
-  echo "Waiting for '$3' $1 to become $2..."
-  kubectl-wait --for=condition="$2" --all "$1" --timeout=60s --namespace "$3"
+  echo "Waiting for '$1' rollout..."
+  workloads "$1" | while read -r workload; do
+    kubectl rollout status "$workload" --namespace "$1" --timeout=120s
+  done
 }
 
 deploy() {
@@ -25,14 +32,12 @@ deploy() {
   namespace="$(basename "$directory")"
   echo "Deploying '$component'..."
   kustomize build --enable-alpha-plugins "$directory" | kubectl-apply -f -
-  wait-for deployments available "$namespace"
-  wait-for daemonsets available "$namespace"
-  wait-for pods ready "$namespace"
+  wait-for "$namespace"
 }
 
 defaults() {
   base="$(root)"
-  awk '{print "'"$base"'/" $0}' "$base/components.lst"
+  grep "^[^#;]" "$base/components.lst" | awk '{print "'"$base"'/" $0}'
 }
 
 PARAMS=""

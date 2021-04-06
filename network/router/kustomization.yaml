@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: router
 
 resources:
+  - namespace.yaml
   - service.yaml
   - ingress-private.yaml
   - ingress-public.yaml

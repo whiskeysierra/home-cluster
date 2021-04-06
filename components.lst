@@ -1,7 +1,7 @@
-dns/unbound
-dns/coredns
+# TODO dns/unbound
+# TODO dns/coredns
 dns/pihole
-network/metallb
+network/metallb-system
 network/ingress-nginx
 network/router
 web-view

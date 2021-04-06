@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: ingress-nginx
 
 resources:
+  - namespace.yaml
   - ingress-nginx-private.yaml
   - ingress-nginx-public.yaml

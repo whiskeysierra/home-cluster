@@ -3,9 +3,9 @@ kind: Kustomization
 namespace: pihole
 
 resources:
+  - namespace.yaml
   - deployment.yaml
-  - service-dns.yaml
-  - service-http.yaml
+  - service.yaml
   - ingress-private.yaml
   - ingress-public.yaml
 
