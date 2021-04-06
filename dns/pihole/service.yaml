@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: pihole-dns-tcp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole
 spec:
   type: LoadBalancer
   loadBalancerIP: 192.168.100.1
@@ -18,6 +20,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: pihole-dns-udp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole
 spec:
   type: LoadBalancer
   loadBalancerIP: 192.168.100.1
